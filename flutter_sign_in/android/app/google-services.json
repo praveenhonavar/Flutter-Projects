@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "9482337746",
+    "firebase_url": "https://flutter-signin-925e8.firebaseio.com",
+    "project_id": "flutter-signin-925e8",
+    "storage_bucket": "flutter-signin-925e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9482337746:android:bcf8f8e8dae41395da1c0b",
+        "android_client_info": {
+          "package_name": "com.enci.fsignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9482337746-velapcg7kishs4i73do79fm201ebojp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrKMJC_eAxdaIhlyEp2hRUFrCDD7uGXQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9482337746-velapcg7kishs4i73do79fm201ebojp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
