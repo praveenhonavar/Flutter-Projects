@@ -1,0 +1,22 @@
+[
+    {
+        "name":"KP",
+        "age":"21",
+        "gender":"F"
+    },
+    {
+        "name":"PD",
+        "age":"21",
+        "gender":"M"
+    },
+    {
+        "name":"PO",
+        "age":"21",
+        "gender":"M"
+    },
+    {
+        "name":"SO",
+        "age":"21",
+        "gender":"M"
+    }
+]
