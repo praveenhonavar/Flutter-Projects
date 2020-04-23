@@ -6,6 +6,10 @@ import 'package:pokemon_app/pokemon.dart';
 
 void main() => runApp(
       MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+        ),
         home: MyApp(),
         title: 'Pokemon',
       ),
@@ -43,7 +47,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right:22.0),
+            child: Icon(
+              Icons.search,
+            ),
+          )
+        ],
+        leading: Icon(Icons.menu),
         backgroundColor: Colors.cyan,
+        centerTitle: true,
         title: Text(
           'Pokemon',
         ),
@@ -65,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                               MaterialPageRoute(
                                 builder: (context) => PokeDetails(),
                                 settings: RouteSettings(
-                                    arguments: poke,
+                                  arguments: poke,
                                 ),
                               ),
                             );
@@ -99,12 +113,12 @@ class _MyAppState extends State<MyApp> {
                       ))
                   .toList(),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        child: Icon(
-          Icons.refresh,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: ()=> MyApp(),
+      //   child: Icon(
+      //     Icons.refresh,
+      //   ),
+      // ),
     );
   }
 }

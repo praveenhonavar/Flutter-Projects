@@ -34,9 +34,25 @@ class PokeDetails extends StatelessWidget {
               borderOnForeground: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //crossAxisAlignment: CrossAxisAlignment.,
                 children: <Widget>[
+                  Container(
+                    width: 75,
+                    height: 75,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          details.img,
+                          scale: .5,
+                        ),
+                      ),
+                    ),
+                  ),
                   Text(
                     details.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     'Height:${details.height}',
@@ -46,47 +62,94 @@ class PokeDetails extends StatelessWidget {
                   ),
                   Text(
                     'Types',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: details.type
-                        .map(
-                            (t) => FilterChip(label: Text(t), onSelected: null))
+                        .map((t) => FilterChip(
+                            label: Text(
+                              t,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                //backgroundColor: Colors.white,
+                                color: Colors.white,
+                              ),
+                            ),
+                            //selected: true,
+                            showCheckmark: false,
+                            selected: true,
+                            selectedColor: Colors.greenAccent,
+                            //backgroundColor: Colors.green,
+
+                            onSelected: null))
                         .toList(),
                   ),
                   Text(
                     'Weakness',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: details.weaknesses
                         .map(
-                            (t) => FilterChip(label: Text(t), onSelected: null))
+                          (t) => FilterChip(
+                            label: Text(
+                              t,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onSelected: null,
+                            disabledColor: Colors.redAccent,
+                          ),
+                        )
                         .toList(),
                   ),
-
                   Text(
                     'Next Evolution',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: details.nextEvolution==null? ()=>print('efef'):details.nextEvolution
-                  //       .map((t) => FilterChip(label: Text(t.name), onSelected: null))
-                  //       .toList(),
-                  // ),
-
-                  //  Text(
-                  //   'Previous Evolution',
-                  // ),
-
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: details.prevEvolution
-                  //       .map((t) => FilterChip(label: Text(t.name), onSelected: null))
-                  //       .toList(),
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: details.nextEvolution == null
+                        ? List<Widget>(0)
+                        : details.nextEvolution
+                            .map((n) => FilterChip(
+                                disabledColor: Colors.lightBlueAccent,
+                                label: Text(
+                                  n.name,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onSelected: null))
+                            .toList(),
+                  ),
+                  Text(
+                    'Previous Evolution',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: details.prevEvolution == null
+                        ? List<Widget>(0)
+                        : details.prevEvolution
+                            .map((t) => FilterChip(
+                                disabledColor: Colors.yellowAccent,
+                                label: Text(t.name),
+                                onSelected: null))
+                            .toList(),
+                  ),
                 ],
               ),
             ),

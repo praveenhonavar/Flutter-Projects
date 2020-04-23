@@ -1,4 +1,4 @@
-name: pokemon_app
+name: flutter_ml
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -17,9 +17,14 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  http: ^0.12.0+4
   flutter:
     sdk: flutter
+  image_picker:
+  firebase_ml_vision: ^0.9.3+8
+  http: ^0.12.0+4
+
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,10 +62,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assests/Poppins-Medium.ttf
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
