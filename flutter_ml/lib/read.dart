@@ -1,60 +1,179 @@
-import 'dart:convert';
+//import 'dart:convert';
+//import 'dart:js';
 
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+//import 'package:flutter_ml/mainPage.dart';
+//import 'package:flutter_ml/main.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
+
+//import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 import 'package:flutter_ml/nutridetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'mainPage.dart';
 
 class Read extends StatefulWidget {
   @override
   _ReadState createState() => _ReadState();
 }
 
-FoodNutrients fobj;
-int ele;
+FoodNutrients pobj;
+FoodNutrients cobj;
+FoodNutrients eobj;
+
+int protein;
+int carbo;
+int fats;
+int energy;
 
 class _ReadState extends State<Read> {
-  bool isLoaded = false;
+  bool isLoaded = true;
+
+  HomePage homePage = new HomePage();
+  int counter = 0;
 
   var url =
       'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=';
 
-  getNutri(VisionText data) async {
-    var res = await get(url + data.text);
-    var detail = jsonDecode(res.body);
+  // getNutri(VisionText data) async {
+  //   var res = await get(url + data.text);
+  //   var detail = jsonDecode(res.body);
 
-    //print('ddddddd' + detail.toString());
+  //   //print('ddddddd' + detail.toString());
 
-    Nutridetails nutri = Nutridetails.fromJson(detail);
+  //   Nutridetails nutri = Nutridetails.fromJson(detail);
 
-    Foods f = nutri.foods[0];
+  //   Foods f = nutri.foods[0];
+
+  //   int len = f.foodNutrients.length;
+  //   if (len == 0) {
+  //     print('ggggg');
+  //   } else {
+  //     for (int i = 0; i < len; i++) {
+  //       print('innnnnn');
+  //       String k = f.foodNutrients[i].nutrientName;
+  //       //print(k);
+
+  //       if (k == 'Protein') {
+  //         print(i);
+  //         protein = i;
+  //       } else if (k == "Carbohydrate, by difference") {
+  //         print(i);
+  //         carbo = i;
+  //       } else if (k == "Carbohydrate, by difference") {
+  //         print(i);
+  //         carbo = i;
+  //       } else if (k == 'Energy') {
+  //         print(i);
+  //         energy = i;
+  //       } else {
+  //         continue;
+  //       }
+
+  //       //pobj = f.foodNutrients[protein];
+  //       // print(fobj.nutrientName);
+
+  //     }
+  //   }
+
+  //   //FoodNutrients fobj = new FoodNutrients.fromJson(f.toJson());
+
+  //   //print(fobj.nutrientId);
+
+  //   setState(() {
+  //     pobj = f.foodNutrients[protein];
+  //     cobj = f.foodNutrients[carbo];
+  //     eobj = f.foodNutrients[energy];
+  //     isLoaded = true;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    loadCounter();
+    //getNutri(data);
+  }
+
+  loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      counter = prefs.getInt('counter') ?? 0;
+    });
+  }
+
+  addCounter(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      counter = (prefs.getInt('counter') ?? 0) + int.parse(eobj.nutrientNumber);
+      prefs.setInt('counter', counter);
+    });
+
+    Navigator.pop(context);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(),
+        settings: RouteSettings(arguments: counter),
+      ),
+    );
+  }
+
+  remove(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      prefs.remove('counter');
+      loadCounter();
+    });
+
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(),
+        settings: RouteSettings(arguments: counter),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Foods f = ModalRoute.of(context).settings.arguments;
 
     int len = f.foodNutrients.length;
 
-    if(len==0 ){
+    if (len == 0) {
       print('ggggg');
-      }
-
-    else{
-
+    } else {
       for (int i = 0; i < len; i++) {
-
         print('innnnnn');
-
         String k = f.foodNutrients[i].nutrientName;
-
         //print(k);
 
-      if (k == 'Protein') {
-        print(i);
-        ele = i;
-        break;
+        if (k == 'Protein') {
+          print(i);
+          protein = i;
+        } else if (k == "Carbohydrate, by difference") {
+          print(i);
+          carbo = i;
+        } else if (k == "Carbohydrate, by difference") {
+          print(i);
+          carbo = i;
+        } else if (k == 'Energy') {
+          print(i);
+          energy = i;
+        } else {
+          continue;
+        }
+
+        //pobj = f.foodNutrients[protein];
+        // print(fobj.nutrientName);
+
       }
-
-      fobj = f.foodNutrients[ele];
-      print(fobj.nutrientName);
-
-    }
     }
 
     //FoodNutrients fobj = new FoodNutrients.fromJson(f.toJson());
@@ -62,38 +181,153 @@ class _ReadState extends State<Read> {
     //print(fobj.nutrientId);
 
     setState(() {
-      fobj = f.foodNutrients[ele];
+      pobj = f.foodNutrients[protein];
+      cobj = f.foodNutrients[carbo];
+      eobj = f.foodNutrients[energy];
       isLoaded = true;
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
-
-    VisionText data = ModalRoute.of(context).settings.arguments;
-
-    //print(data.toString());
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Reader'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            color: Colors.amber,
-            height: 400,
-            width: 300,
-            child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 isLoaded
                     ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text('Protiens:${fobj.nutrientNumber}'),
-                          Text(fobj.nutrientName),
-                          Text('Protiens:${fobj.unitName}'),
-                          Text('Protiens:${fobj.value}'),
+                          Text(
+                              'Protiens:${pobj.nutrientNumber} ${pobj.unitName}'),
+                          Text(
+                              'Carbhohydrates:${cobj.nutrientNumber} ${cobj.unitName}'),
+                          Text(
+                              'Energy:${eobj.nutrientNumber}  ${eobj.unitName}'),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              // CircularStepProgressIndicator(
+                              //   child: Text(
+                              //     'CAl$counter',
+                              //   ),
+                              //   totalSteps: 2500,
+                              //   currentStep: int.parse(eobj.nutrientNumber),
+                              //   stepSize: 10,
+                              //   selectedColor: Colors.greenAccent,
+                              //   unselectedColor: Colors.grey[200],
+                              //   padding: 0,
+                              //   width: 100,
+                              //   height: 100,
+                              //   selectedStepSize: 15,
+                              // ),
+                              CircularStepProgressIndicator(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'CAL',
+                                    ),
+                                    Text(
+                                      cobj.nutrientNumber,
+                                    ),
+                                  ],
+                                ),
+                                totalSteps: 2500,
+                                currentStep: int.parse(eobj.nutrientNumber),
+                                stepSize: 10,
+                                selectedColor: Colors.greenAccent,
+                                unselectedColor: Colors.grey[200],
+                                padding: 0,
+                                width: 100,
+                                height: 100,
+                                selectedStepSize: 15,
+                              ),
+                              CircularStepProgressIndicator(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'PROT',
+                                    ),
+                                    Text(
+                                      pobj.nutrientNumber,
+                                    ),
+                                  ],
+                                ),
+                                totalSteps: 2500,
+                                currentStep: int.parse(eobj.nutrientNumber),
+                                stepSize: 10,
+                                selectedColor: Colors.greenAccent,
+                                unselectedColor: Colors.grey[200],
+                                padding: 0,
+                                width: 100,
+                                height: 100,
+                                selectedStepSize: 15,
+                              ),
+                              CircularStepProgressIndicator(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'CARBS',
+                                    ),
+                                    Text(
+                                      cobj.nutrientNumber,
+                                    ),
+                                  ],
+                                ),
+                                totalSteps: 2500,
+                                currentStep: int.parse(eobj.nutrientNumber),
+                                stepSize: 10,
+                                selectedColor: Colors.greenAccent,
+                                unselectedColor: Colors.grey[200],
+                                padding: 0,
+                                width: 100,
+                                height: 100,
+                                selectedStepSize: 15,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 250,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  FloatingActionButton(
+                                    heroTag: 'remove',
+                                    backgroundColor: Colors.red,
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Icon(
+                                      Icons.clear,
+                                      semanticLabel: 'Dont Add',
+                                    ),
+                                  ),
+                                  FloatingActionButton(
+                                    heroTag: 'add',
+                                    backgroundColor: Colors.green,
+                                    onPressed: () => addCounter(context),
+                                    child: Icon(
+                                      Icons.done,
+                                    ),
+                                  ),
+                                  FlatButton.icon(
+                                    onPressed: () => remove(context),
+                                    icon: Icon(Icons.restore),
+                                    label: Text('Reset'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ],
                       )
                     : Text(
@@ -101,56 +335,11 @@ class _ReadState extends State<Read> {
                       ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        'Recoganized food',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                child: Container(
-                  child: Text(data.text),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  RaisedButton.icon(
-                    onPressed: () => getNutri(data),
-                    icon: Icon(
-                      Icons.fastfood,
-                    ),
-                    label: Text(
-                      'Get Nutrients',
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )
-        ],
+            SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
       ),
     );
   }
