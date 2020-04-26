@@ -16,20 +16,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int c;
+  int c = 0;
 
   loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
       c = prefs.getInt('counter') ?? 0;
-      print(c);
+      print('cccccccccc$c');
+    });
+  }
+
+  remove(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      prefs.remove('counter');
+      loadCounter();
     });
   }
 
   @override
   void initState() {
     super.initState();
+
     loadCounter();
   }
 
@@ -45,6 +55,7 @@ class _HomePageState extends State<HomePage> {
   VisionText vt;
   TextBlock block;
   int currentIndex = 1;
+  Foods f;
 
   pickImage() async {
     var temp = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -75,6 +86,8 @@ class _HomePageState extends State<HomePage> {
             () {
               try {
                 pickedImage = temp;
+                //f.foodimg = pickedImage;
+                print('lllolkl');
                 img = true;
                 readText();
               } catch (e) {
@@ -94,7 +107,6 @@ class _HomePageState extends State<HomePage> {
 
     for (TextBlock block in readText.blocks) {
       print(block.text);
-
       setState(() {
         txt = true;
         vt = readText;
@@ -103,15 +115,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   getNutri(VisionText data) async {
+    Navigator.popAndPushNamed(
+      context,
+      'l',
+    );
+
     img = false;
-    var res = await get(url + data.text);
+
+    var res;
+
+    res = await get(url + data.text);
     var detail = jsonDecode(res.body);
 
     print('ddddddd' + detail.toString());
 
     Nutridetails nutri = Nutridetails.fromJson(detail);
 
-    Foods f = nutri.foods[0];
+    f = nutri.foods[0];
+    print('getttttttttttt');
+    print(res);
 
     Navigator.push(
       context,
@@ -183,6 +205,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: chooseImage,
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 5,
+                  ),
                   GestureDetector(
                     child: Text(
                       'Open Camera',
@@ -201,14 +230,67 @@ class _HomePageState extends State<HomePage> {
     // var counter = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      drawerScrimColor: Colors.black,
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('Home'),
+              leading: Icon(
+                Icons.home,
+              ),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+            Divider(),
+            ListTile(
+              title: Text('Reset Today\'s Calories'),
+              leading: Icon(
+                Icons.restore,
+              ),
+              onTap: () => remove(context),
+            ),
+            Divider(),
+            ListTile(
+              title: Text('About'),
+              leading: Icon(
+                Icons.info_outline,
+              ),
+              onTap: () => remove(context),
+            ),
+            Divider(),
+          ],
+        ),
+      ),
       appBar: AppBar(
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 12, 12, 0),
+            child: Icon(
+              Icons.more_vert,
+              color: Colors.green,
+            ),
+          )
+        ],
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Icon(
+            Icons.menu,
+            color: Colors.green,
+          ),
+        ),
         elevation: 0,
         backgroundColor: Colors.white12,
         centerTitle: true,
-        title: Text(
-          'NutriScan',
-          style: TextStyle(
-            color: Colors.amber,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Text(
+            'NutriScan',
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              color: Colors.amber,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -234,48 +316,124 @@ class _HomePageState extends State<HomePage> {
                     //   height: 50,
                     // ),
                     GestureDetector(
-                      //onTap: () => ,
-                      child: RaisedButton(
-                          onPressed: () => getNutri(vt),
-                          child: Icon(Icons.add)),
-                      //   child: FlatButton(
-                      //     child: Icon(
-                      //       Icons.arrow_forward_ios,
-                      //     ),
-                      //     // onPressed: () => txt
-                      //     //     ? Navigator.push(
-                      //     //         context,
-                      //     //         MaterialPageRoute(
-                      //     //           builder: (context) => Read(),
-                      //     //           settings: RouteSettings(
-                      //     //             arguments: (
-                      //     //               pobj,eobj,cobj
-                      //     //             ),
-                      //     //           ),
-                      //     //         ),
-                      //           )
-                      //         : Text('WAitt'),
-                      //   ),
-                      // ),
+                      child: FlatButton(
+                        onPressed: null,
+                        //onPressed: ()=>CircularProgressIndicator(),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 150,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 45,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Tap to Proceed',
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () => getNutri(vt),
                     ),
                   ],
                 )
-              : Center(
-                  child: CircularStepProgressIndicator(
-                    child: Text(
-                      'CAl$c',
+              : Column(
+                  children: <Widget>[
+                    Center(
+                      child: CircularStepProgressIndicator(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.flash_on,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '${2500 - c}',
+                              style: TextStyle(
+                                fontSize: 40,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              'REMAINING',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                //fontSize: 20
+                              ),
+                            ),
+                          ],
+                        ),
+                        totalSteps: 2500,
+                        currentStep: c,
+                        stepSize: 10,
+                        selectedColor: Colors.greenAccent,
+                        unselectedColor: Colors.grey[200],
+                        padding: 0,
+                        width: 200,
+                        height: 200,
+                        selectedStepSize: 15,
+                      ),
                     ),
-                    totalSteps: 2500,
-                    currentStep: 1000,
-                    stepSize: 10,
-                    selectedColor: Colors.greenAccent,
-                    unselectedColor: Colors.grey[200],
-                    padding: 0,
-                    width: 150,
-                    height: 150,
-                    selectedStepSize: 15,
-                  ),
-                ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Column(children: <Widget>[
+                          Text(
+                            '$c',
+                            style: TextStyle(
+                              //color: Colors.grey,
+                              fontSize: 20
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'CONSUMED',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              //fontSize: 20
+                            ),
+                          ),
+                        ]),
+                        Column(
+                          children: <Widget>[
+                            Text('2500',
+                             style: TextStyle(
+                              //color: Colors.grey,
+                              fontSize: 20
+                            ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'REQURIED',
+                              style: TextStyle(
+                              color: Colors.grey,
+                              //fontSize: 20
+                            ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -285,12 +443,12 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: currentIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.amber,
+        unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.shifting,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Colors.amber,
+            backgroundColor: Colors.white,
             title: Text(
               'Search',
             ),
@@ -299,21 +457,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.amber,
+            backgroundColor: Colors.white,
             title: Text(
               'Read Food',
             ),
-            icon: InkWell(
-              onTap: () {
-                chooseScreen();
-              },
+            icon: GestureDetector(
+              onTap: () => chooseScreen(),
               child: Icon(
                 Icons.camera_alt,
               ),
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.amber,
+            backgroundColor: Colors.white,
             title: Text(
               'Account',
             ),

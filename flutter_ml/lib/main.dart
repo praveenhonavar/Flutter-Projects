@@ -3,7 +3,9 @@
 
 //import 'dart:js';
 
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ml/loader.dart';
 import 'package:flutter_ml/mainPage.dart';
 import 'package:flutter_ml/read.dart';
 //import 'package:flutter_ml/read.dart';
@@ -13,10 +15,14 @@ import 'package:flutter_ml/read.dart';
 
 void main() => runApp(
       MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+        ),
         initialRoute: 'h',
         routes: {
           'h': (context) => HomePage(),
           'r': (context) => Read(),
+          'l':(context) => Loader(),
         },
       ),
     );

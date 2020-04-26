@@ -36,59 +36,6 @@ class _ReadState extends State<Read> {
   var url =
       'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=';
 
-  // getNutri(VisionText data) async {
-  //   var res = await get(url + data.text);
-  //   var detail = jsonDecode(res.body);
-
-  //   //print('ddddddd' + detail.toString());
-
-  //   Nutridetails nutri = Nutridetails.fromJson(detail);
-
-  //   Foods f = nutri.foods[0];
-
-  //   int len = f.foodNutrients.length;
-  //   if (len == 0) {
-  //     print('ggggg');
-  //   } else {
-  //     for (int i = 0; i < len; i++) {
-  //       print('innnnnn');
-  //       String k = f.foodNutrients[i].nutrientName;
-  //       //print(k);
-
-  //       if (k == 'Protein') {
-  //         print(i);
-  //         protein = i;
-  //       } else if (k == "Carbohydrate, by difference") {
-  //         print(i);
-  //         carbo = i;
-  //       } else if (k == "Carbohydrate, by difference") {
-  //         print(i);
-  //         carbo = i;
-  //       } else if (k == 'Energy') {
-  //         print(i);
-  //         energy = i;
-  //       } else {
-  //         continue;
-  //       }
-
-  //       //pobj = f.foodNutrients[protein];
-  //       // print(fobj.nutrientName);
-
-  //     }
-  //   }
-
-  //   //FoodNutrients fobj = new FoodNutrients.fromJson(f.toJson());
-
-  //   //print(fobj.nutrientId);
-
-  //   setState(() {
-  //     pobj = f.foodNutrients[protein];
-  //     cobj = f.foodNutrients[carbo];
-  //     eobj = f.foodNutrients[energy];
-  //     isLoaded = true;
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -98,9 +45,11 @@ class _ReadState extends State<Read> {
 
   loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      counter = prefs.getInt('counter') ?? 0;
-    });
+    setState(
+      () {
+        counter = prefs.getInt('counter') ?? 0;
+      },
+    );
   }
 
   addCounter(BuildContext context) async {
@@ -130,7 +79,8 @@ class _ReadState extends State<Read> {
       loadCounter();
     });
 
-    Navigator.pop(context);
+    //Navigator.pop(context);
+    //Navigator.pop(context);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -143,7 +93,6 @@ class _ReadState extends State<Read> {
   @override
   Widget build(BuildContext context) {
     Foods f = ModalRoute.of(context).settings.arguments;
-
     int len = f.foodNutrients.length;
 
     if (len == 0) {
@@ -211,20 +160,6 @@ class _ReadState extends State<Read> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              // CircularStepProgressIndicator(
-                              //   child: Text(
-                              //     'CAl$counter',
-                              //   ),
-                              //   totalSteps: 2500,
-                              //   currentStep: int.parse(eobj.nutrientNumber),
-                              //   stepSize: 10,
-                              //   selectedColor: Colors.greenAccent,
-                              //   unselectedColor: Colors.grey[200],
-                              //   padding: 0,
-                              //   width: 100,
-                              //   height: 100,
-                              //   selectedStepSize: 15,
-                              // ),
                               CircularStepProgressIndicator(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -232,12 +167,15 @@ class _ReadState extends State<Read> {
                                     Text(
                                       'CAL',
                                     ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Text(
-                                      cobj.nutrientNumber,
+                                      eobj.nutrientNumber,
                                     ),
                                   ],
                                 ),
-                                totalSteps: 2500,
+                                totalSteps: 550,
                                 currentStep: int.parse(eobj.nutrientNumber),
                                 stepSize: 10,
                                 selectedColor: Colors.greenAccent,
@@ -254,12 +192,15 @@ class _ReadState extends State<Read> {
                                     Text(
                                       'PROT',
                                     ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Text(
                                       pobj.nutrientNumber,
                                     ),
                                   ],
                                 ),
-                                totalSteps: 2500,
+                                totalSteps: 300,
                                 currentStep: int.parse(eobj.nutrientNumber),
                                 stepSize: 10,
                                 selectedColor: Colors.greenAccent,
@@ -276,13 +217,16 @@ class _ReadState extends State<Read> {
                                     Text(
                                       'CARBS',
                                     ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Text(
                                       cobj.nutrientNumber,
                                     ),
                                   ],
                                 ),
-                                totalSteps: 2500,
-                                currentStep: int.parse(eobj.nutrientNumber),
+                                totalSteps: 500,
+                                currentStep: int.parse(cobj.nutrientNumber),
                                 stepSize: 10,
                                 selectedColor: Colors.greenAccent,
                                 unselectedColor: Colors.grey[200],
@@ -305,7 +249,8 @@ class _ReadState extends State<Read> {
                                   FloatingActionButton(
                                     heroTag: 'remove',
                                     backgroundColor: Colors.red,
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () =>
+                                        Navigator.popAndPushNamed(context, 'h'),
                                     child: Icon(
                                       Icons.clear,
                                       semanticLabel: 'Dont Add',
@@ -318,11 +263,6 @@ class _ReadState extends State<Read> {
                                     child: Icon(
                                       Icons.done,
                                     ),
-                                  ),
-                                  FlatButton.icon(
-                                    onPressed: () => remove(context),
-                                    icon: Icon(Icons.restore),
-                                    label: Text('Reset'),
                                   ),
                                 ],
                               ),

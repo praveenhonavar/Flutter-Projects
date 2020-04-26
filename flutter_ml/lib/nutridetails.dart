@@ -1,3 +1,6 @@
+import 'dart:io';
+
+
 class Nutridetails {
   FoodSearchCriteria foodSearchCriteria;
   int totalHits;
@@ -83,6 +86,7 @@ class Foods {
   String gtinUpc;
   String brandOwner;
   String ingredients;
+  File foodimg;
 
   Foods(
       {this.fdcId,
