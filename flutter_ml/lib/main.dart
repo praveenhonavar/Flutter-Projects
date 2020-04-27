@@ -4,10 +4,12 @@
 //import 'dart:js';
 
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ml/loader.dart';
 import 'package:flutter_ml/mainPage.dart';
 import 'package:flutter_ml/read.dart';
+import 'package:flutter_ml/splashscreen.dart';
 //import 'package:flutter_ml/read.dart';
 //import 'package:image_picker/image_picker.dart';
 
@@ -18,11 +20,12 @@ void main() => runApp(
         theme: ThemeData(
           fontFamily: 'Poppins',
         ),
-        initialRoute: 'h',
+        initialRoute: 's',
         routes: {
           'h': (context) => HomePage(),
           'r': (context) => Read(),
-          'l':(context) => Loader(),
+          'l':(context) => Load(),
+          's':(context)=>Splash(),
         },
       ),
     );

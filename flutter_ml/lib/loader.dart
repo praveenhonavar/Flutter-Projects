@@ -3,22 +3,6 @@ import 'package:flutter/material.dart';
 import 'mainPage.dart';
 //import 'package:flutter_ml/main.dart';
 
-class Loader extends StatefulWidget {
-  @override
-  _LoaderState createState() => _LoaderState();
-}
-
-class _LoaderState extends State<Loader> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-      ),
-      home: Load(),
-    );
-  }
-}
 
 class Load extends StatefulWidget {
   @override

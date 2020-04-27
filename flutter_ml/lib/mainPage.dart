@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_ml/loader.dart';
 import 'package:flutter_ml/nutridetails.dart';
 import 'package:flutter_ml/read.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
@@ -63,17 +64,17 @@ class _HomePageState extends State<HomePage> {
     temp == null
         ? pickedImage =
             File('android\app\src\main\res\mipmap-mdpi\ic_launcher.png')
-        : readText();
-    setState(
-      () {
-        try {
-          pickedImage = temp;
-          img = true;
-        } catch (e) {
-          print(e);
-        }
-      },
-    );
+        : setState(
+            () {
+              try {
+                pickedImage = temp;
+                img = true;
+                readText();
+              } catch (e) {
+                print(e);
+              }
+            },
+          );
   }
 
   chooseImage() async {
@@ -115,9 +116,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   getNutri(VisionText data) async {
-    Navigator.popAndPushNamed(
+    Navigator.push(
       context,
-      'l',
+      MaterialPageRoute(
+        builder: (context) => Load(),
+      ),
     );
 
     img = false;
@@ -255,7 +258,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(
                 Icons.info_outline,
               ),
-              onTap: () => remove(context),
+              //onTap: () => remove(context),
             ),
             Divider(),
           ],
@@ -395,9 +398,8 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             '$c',
                             style: TextStyle(
-                              //color: Colors.grey,
-                              fontSize: 20
-                            ),
+                                //color: Colors.grey,
+                                fontSize: 20),
                           ),
                           SizedBox(
                             height: 10,
@@ -412,11 +414,11 @@ class _HomePageState extends State<HomePage> {
                         ]),
                         Column(
                           children: <Widget>[
-                            Text('2500',
-                             style: TextStyle(
-                              //color: Colors.grey,
-                              fontSize: 20
-                            ),
+                            Text(
+                              '2500',
+                              style: TextStyle(
+                                  //color: Colors.grey,
+                                  fontSize: 20),
                             ),
                             SizedBox(
                               height: 10,
@@ -424,9 +426,9 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               'REQURIED',
                               style: TextStyle(
-                              color: Colors.grey,
-                              //fontSize: 20
-                            ),
+                                color: Colors.grey,
+                                //fontSize: 20
+                              ),
                             ),
                           ],
                         ),
@@ -459,12 +461,13 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
             title: Text(
-              'Read Food',
+              'Scan Food',
             ),
             icon: GestureDetector(
               onTap: () => chooseScreen(),
               child: Icon(
                 Icons.camera_alt,
+                size: 40,
               ),
             ),
           ),
