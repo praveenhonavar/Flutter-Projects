@@ -1,8 +1,7 @@
+import 'package:awesome_loader/awesome_loader.dart';
 import 'package:flutter/material.dart';
-
 import 'mainPage.dart';
 //import 'package:flutter_ml/main.dart';
-
 
 class Load extends StatefulWidget {
   @override
@@ -19,7 +18,7 @@ class _LoadState extends State<Load> {
         leading: GestureDetector(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Colors.lightGreen,
           ),
           onTap: () => Navigator.push(
             context,
@@ -33,8 +32,9 @@ class _LoadState extends State<Load> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.green,
+            child: AwesomeLoader(
+              loaderType: 4,
+              color: Colors.lightGreen,
             ),
           ),
           SizedBox(

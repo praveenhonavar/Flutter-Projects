@@ -12,7 +12,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () => Navigator.popAndPushNamed(context, 'h'));
+    Timer(Duration(seconds: 3), () => Navigator.popAndPushNamed(context, 'h'));
   }
 
   @override
