@@ -1,4 +1,4 @@
-name: cryptoapp
+name: flutter_ym
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -17,8 +17,6 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  http: ^0.12.0+4
-  awesome_loader: ^0.0.3
   flutter:
     sdk: flutter
 
@@ -58,10 +56,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assests/Poppins-Medium.ttf
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

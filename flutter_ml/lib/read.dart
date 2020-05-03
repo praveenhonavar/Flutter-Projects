@@ -162,16 +162,28 @@ class _ReadState extends State<Read> {
                             children: <Widget>[
                               CircularStepProgressIndicator(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
                                       'CAL',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
                                       eobj.nutrientNumber,
+                                    ),
+                                    //  SizedBox(
+                                    //   height: 1,
+                                    // ),
+                                    Text(
+                                      'kcal',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -191,12 +203,27 @@ class _ReadState extends State<Read> {
                                   children: <Widget>[
                                     Text(
                                       'PROT',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
                                       pobj.nutrientNumber,
+                                    ),
+
+                                    //  SizedBox(
+                                    //   height: 1,
+                                    // ),
+
+
+                                    Text(
+                                      'grams',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -216,12 +243,24 @@ class _ReadState extends State<Read> {
                                   children: <Widget>[
                                     Text(
                                       'CARBS',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
                                       cobj.nutrientNumber,
+                                    ),
+                                    //  SizedBox(
+                                    //   height: 1,
+                                    // ),
+                                    Text(
+                                      'grams',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -236,6 +275,31 @@ class _ReadState extends State<Read> {
                                 selectedStepSize: 15,
                               ),
                             ],
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  //crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:28.0),
+                                      child: Text(
+                                        'Do you want to add it to \n your daily calorie intake?',
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                          
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 250,

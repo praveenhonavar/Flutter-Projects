@@ -55,8 +55,7 @@ class _SplashState extends State<Splash> {
                   //     color: Colors.teal,
                   //   ),
                   // ),
-                ]
-
+                ],
               ),
             ),
           ],
