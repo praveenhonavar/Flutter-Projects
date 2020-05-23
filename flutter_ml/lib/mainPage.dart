@@ -403,11 +403,15 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            'CONSUMED',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              //fontSize: 20
+                          Center(
+                            child: Text(
+                              'CONSUMED',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.grey,
+
+                                //fontSize: 20
+                              ),
                             ),
                           ),
                         ]),
@@ -424,6 +428,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Text(
                               'REQURIED',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey,
                                 //fontSize: 20

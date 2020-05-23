@@ -21,11 +21,14 @@ class Read extends StatefulWidget {
 FoodNutrients pobj;
 FoodNutrients cobj;
 FoodNutrients eobj;
+FoodNutrients fatobj;
 
 int protein;
 int carbo;
-int fats;
+double fats;
+double sugar;
 int energy;
+String desc;
 
 class _ReadState extends State<Read> {
   bool isLoaded = true;
@@ -101,6 +104,15 @@ class _ReadState extends State<Read> {
       for (int i = 0; i < len; i++) {
         print('innnnnn');
         String k = f.foodNutrients[i].nutrientName;
+
+        if (int.parse(f.foodNutrients[i].nutrientNumber) == 204) {
+          fats = f.foodNutrients[i].value;
+        }
+
+        if (int.parse(f.foodNutrients[i].nutrientNumber) == 269) {
+          sugar = f.foodNutrients[i].value;
+        }
+
         //print(k);
 
         if (k == 'Protein') {
@@ -133,36 +145,67 @@ class _ReadState extends State<Read> {
       pobj = f.foodNutrients[protein];
       cobj = f.foodNutrients[carbo];
       eobj = f.foodNutrients[energy];
+      desc = f.description;
+      fats = fats;
+      sugar = sugar;
       isLoaded = true;
     });
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.green,
+          ),
+        ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Column(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 isLoaded
                     ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text(
-                              'Protiens:${pobj.nutrientNumber} ${pobj.unitName}'),
-                          Text(
-                              'Carbhohydrates:${cobj.nutrientNumber} ${cobj.unitName}'),
-                          Text(
-                              'Energy:${eobj.nutrientNumber}  ${eobj.unitName}'),
-                          SizedBox(
-                            height: 50,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 38.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  'Your food item is \n $desc \n having following nutrients',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+
+                          SizedBox(
+                            height: 30,
+                          ),
+                          // Text(
+                          //     'Protiens:${pobj.nutrientNumber} ${pobj.unitName}'),
+                          // Text(
+                          //     'Carbhohydrates:${cobj.nutrientNumber} ${cobj.unitName}'),
+                          // Text(
+                          //     'Energy:${eobj.nutrientNumber}  ${eobj.unitName}'),
+                          // SizedBox(
+                          //   height: 50,
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               CircularStepProgressIndicator(
+                              
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
                                       'CAL',
@@ -170,11 +213,11 @@ class _ReadState extends State<Read> {
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
                                     Text(
-                                      eobj.nutrientNumber,
+                                      '${eobj.value}',
                                     ),
                                     //  SizedBox(
                                     //   height: 1,
@@ -187,10 +230,12 @@ class _ReadState extends State<Read> {
                                     ),
                                   ],
                                 ),
-                                totalSteps: 550,
+                                totalSteps: 500,
                                 currentStep: int.parse(eobj.nutrientNumber),
                                 stepSize: 10,
-                                selectedColor: Colors.greenAccent,
+                                selectedColor:Color(
+                                0xFFFAD02C
+                              ),
                                 unselectedColor: Colors.grey[200],
                                 padding: 0,
                                 width: 100,
@@ -207,17 +252,16 @@ class _ReadState extends State<Read> {
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
                                     Text(
-                                      pobj.nutrientNumber,
+                                      '${pobj.value}',
                                     ),
 
                                     //  SizedBox(
                                     //   height: 1,
                                     // ),
-
 
                                     Text(
                                       'grams',
@@ -230,7 +274,9 @@ class _ReadState extends State<Read> {
                                 totalSteps: 300,
                                 currentStep: int.parse(eobj.nutrientNumber),
                                 stepSize: 10,
-                                selectedColor: Colors.greenAccent,
+                                selectedColor: Color(
+                                  0xFF67E1E8
+                                ),
                                 unselectedColor: Colors.grey[200],
                                 padding: 0,
                                 width: 100,
@@ -247,11 +293,11 @@ class _ReadState extends State<Read> {
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
                                     Text(
-                                      cobj.nutrientNumber,
+                                      '${cobj.value}',
                                     ),
                                     //  SizedBox(
                                     //   height: 1,
@@ -267,7 +313,95 @@ class _ReadState extends State<Read> {
                                 totalSteps: 500,
                                 currentStep: int.parse(cobj.nutrientNumber),
                                 stepSize: 10,
-                                selectedColor: Colors.greenAccent,
+                                selectedColor: Color(
+                                  0xFFE151AF
+                                ),
+                                unselectedColor: Colors.grey[200],
+                                padding: 0,
+                                width: 100,
+                                height: 100,
+                                selectedStepSize: 15,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              CircularStepProgressIndicator(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'Sugar',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
+                                    Text(
+                                      '$sugar',
+                                    ),
+                                    //  SizedBox(
+                                    //   height: 1,
+                                    // ),
+                                    Text(
+                                      'grams',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                totalSteps: 500,
+                                currentStep: int.parse(cobj.nutrientNumber),
+                                stepSize: 10,
+                                selectedColor: Color(
+                                  0xFFABEA7C
+                                ),
+                                unselectedColor: Colors.grey[200],
+                                padding: 0,
+                                width: 100,
+                                height: 100,
+                                selectedStepSize: 15,
+                              ),
+                              CircularStepProgressIndicator(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'FAT',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
+                                    Text(
+                                      '$fats',
+                                    ),
+                                    //  SizedBox(
+                                    //   height: 1,
+                                    // ),
+                                    Text(
+                                      'grams',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                totalSteps: 500,
+                                currentStep: int.parse(cobj.nutrientNumber),
+                                stepSize: 10,
+                                selectedColor: Color(
+                                  0xFF5428AB
+                                ),
                                 unselectedColor: Colors.grey[200],
                                 padding: 0,
                                 width: 100,
@@ -277,66 +411,73 @@ class _ReadState extends State<Read> {
                             ],
                           ),
 
-                          Padding(
-                            padding: const EdgeInsets.only(top:8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  //crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(top:28.0),
-                                      child: Text(
-                                        'Do you want to add it to \n your daily calorie intake?',
-                                        textAlign: TextAlign.justify,
-                                        style: TextStyle(
-                                          
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 8.0),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: <Widget>[
+                          //       Column(
+                          //         //crossAxisAlignment: CrossAxisAlignment.end,
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: <Widget>[
+                          //           Padding(
+                          //             padding: const EdgeInsets.only(top: 28.0),
+                          //             child: Text(
+                          //               'Do you want to add it to \n your daily calorie intake?',
+                          //               textAlign: TextAlign.justify,
+                          //               style: TextStyle(),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 250,
+                          // ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Do you want to add it to \n your daily calorie intake?',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(),
+                              ),
+                            ],
                           ),
                           SizedBox(
-                            height: 250,
+                            height: 40,
                           ),
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  FloatingActionButton(
-                                    heroTag: 'remove',
-                                    backgroundColor: Colors.red,
-                                    onPressed: () =>
-                                        Navigator.popAndPushNamed(context, 'h'),
-                                    child: Icon(
-                                      Icons.clear,
-                                      semanticLabel: 'Dont Add',
-                                    ),
-                                  ),
-                                  FloatingActionButton(
-                                    heroTag: 'add',
-                                    backgroundColor: Colors.green,
-                                    onPressed: () => addCounter(context),
-                                    child: Icon(
-                                      Icons.done,
-                                    ),
-                                  ),
-                                ],
+                              FloatingActionButton(
+                                heroTag: 'add',
+                                backgroundColor: Colors.green,
+                                onPressed: () => addCounter(context),
+                                child: Icon(
+                                  Icons.done,
+                                ),
+                              ),
+                              FloatingActionButton(
+                                heroTag: 'remove',
+                                backgroundColor: Colors.red,
+                                onPressed: () =>
+                                    Navigator.popAndPushNamed(context, 'h'),
+                                child: Icon(
+                                  Icons.clear,
+                                  semanticLabel: 'Dont Add',
+                                ),
                               ),
                             ],
                           ),
                         ],
                       )
-                    : Text(
-                        'Laoding',
-                      ),
+                    : CircularProgressIndicator(),
               ],
             ),
             SizedBox(

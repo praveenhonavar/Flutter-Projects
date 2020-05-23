@@ -1,6 +1,8 @@
 import 'package:awesome_loader/awesome_loader.dart';
 import 'package:flutter/material.dart';
+
 import 'mainPage.dart';
+//import 'mainPage.dart';
 //import 'package:flutter_ml/main.dart';
 
 class Load extends StatefulWidget {
@@ -22,6 +24,7 @@ class _LoadState extends State<Load> {
           ),
           onTap: () => Navigator.push(
             context,
+
             MaterialPageRoute(
               builder: (context) => HomePage(),
             ),
