@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Second extends StatelessWidget {
   @override
@@ -10,8 +11,10 @@ class Second extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text(
-          'Second',
+        child: Column(
+          children: <Widget>[
+            Lottie.asset('assests/ponu.json'),
+          ],
         ),
       ),
     );
