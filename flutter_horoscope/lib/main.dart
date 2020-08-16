@@ -86,21 +86,27 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         },
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Month',
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF2C3E50), Color(0xFF4CA1AF)],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Month',
+                              ),
                             ),
                           ),
                         ),
                       ),
-
-
                       InkWell(
-                         onTap: () {
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -111,10 +117,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         },
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF4B79A1), Color(0xFF283E51)],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -125,6 +137,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -139,10 +154,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         },
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF141E30), Color(0xFF243B55)],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -164,10 +185,16 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         },
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF000428), Color(0xFF004e92)],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
