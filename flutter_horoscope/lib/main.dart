@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_horoscope/year.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
-// import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
-import 'day.dart';
-import 'month.dart';
-import 'week.dart';
-import 'year.dart';
+import 'package:flutter_horoscope/service/day.dart';
+import 'package:flutter_horoscope/service/week.dart';
+import 'package:flutter_horoscope/service/month.dart';
+import 'package:flutter_horoscope/service/year.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-// import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -77,10 +75,25 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Color(0xFF141E30), Color(0xFF243B55)],
-                    ),
+                  ),
                 ),
-                child: SpinKitPulse(
-                  color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitPulse(
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Your Horoscope is Loading\nPlease Wait",
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
             )
@@ -97,12 +110,12 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 40, 10, 0),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/pd.jpeg'),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(0, 40, 10, 0),
+                      //   child: CircleAvatar(
+                      //     backgroundImage: AssetImage('assets/images/pd.jpeg'),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Row(
@@ -110,11 +123,15 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Container(
                         child: currentDate.hour < 12
-                            ? Text(
-                                "Good Morning\n PD",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Good Morning\n PD",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               )
                             : Padding(
@@ -171,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                                       'Monthly\nHoroscope',
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.white54,
+                                        color: Colors.white70,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -212,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                                       'Yearly\nHoroscope',
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.white54,
+                                        color: Colors.white70,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -259,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                                       'Daily\nHoroscope',
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.white54,
+                                        color: Colors.white70,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -300,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                                       'Weekly\nHoroscope',
                                       style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.white54,
+                                        color: Colors.white70,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
